@@ -7,7 +7,8 @@ def get_connection():
 
 def create_tables():
     connection = get_connection()
-    cursor = connection.cursor(
+    cursor = connection.cursor()
+    cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS clientes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
