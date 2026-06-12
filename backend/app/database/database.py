@@ -1,17 +1,24 @@
 import sqlite3
 
+# Nome do Banco de Dados
 DATABASE_NAME = "barbearia.db"
 
+# Função para conectar-se o banco de dados
 def get_connection():
     connection = sqlite3.connect(DATABASE_NAME)
     connection.execute("PRAGMA foreign_keys = ON")
     return connection
 
-
+# Função para criar as tabelas
 def create_tables():
+    
+    # Conexão
     connection = get_connection()
+
+    # Envia e processa os comandos
     cursor = connection.cursor()
 
+    # Executa a operação contida
     cursor.execute(
         """
         CREATE TABLE IF NOT EXISTS clientes (
@@ -46,5 +53,8 @@ def create_tables():
         """
     )
 
+    # Salva a operação
     connection.commit()
+
+    # Encerra a conexão
     connection.close()
