@@ -43,3 +43,26 @@ def buscar_cliente_por_id(cliente_id):
     connection.close()
     return cliente
 
+def atualizar_cliente(cliente_id, cliente):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        """
+        UPDATE clientes
+        SET nome = ?, telefone = ?
+        WHERE id = ?
+        """,
+        (
+            cliente.nome,
+            cliente.telefone,
+            cliente_id
+        )
+    )
+    
+    connection.commit()
+
+    linhas_afetadas = cursor.rowcount
+
+    connection.close()
+
+    return linhas_afetadas
