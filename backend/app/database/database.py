@@ -6,6 +6,7 @@ DATABASE_NAME = "barbearia.db"
 # Função para conectar-se o banco de dados
 def get_connection():
     connection = sqlite3.connect(DATABASE_NAME)
+    connection.row_factory = sqlite3.Row
     connection.execute("PRAGMA foreign_keys = ON")
     return connection
 

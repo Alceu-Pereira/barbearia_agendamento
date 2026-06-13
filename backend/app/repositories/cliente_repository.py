@@ -29,3 +29,17 @@ def listar_clientes():
 
     return clientes
 
+def buscar_cliente_por_id(cliente_id):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute(
+        """
+        SELECT * FROM clientes
+        WHERE id = ?
+        """,
+        (cliente_id,)
+    )
+    cliente = cursor.fetchone()
+    connection.close()
+    return cliente
+
