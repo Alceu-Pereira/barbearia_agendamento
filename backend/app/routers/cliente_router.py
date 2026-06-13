@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException
-from app.schemas.cliente_schema import ClienteCreate
+from app.schemas.cliente_schema import ClienteCreate, ClienteUpdate
 from app.repositories.cliente_repository import (
     criar_cliente,
     listar_clientes,
     buscar_cliente_por_id,
+    atualizar_cliente,
 )
 
 
@@ -34,3 +35,23 @@ def buscar_cliente(cliente_id: int):
         )
     
     return cliente
+
+@router.put("/clientes/{cliente_id}")
+def atualizar_cliente_route(
+    cliente_id: int,
+    cliente: ClienteUpdate
+):
+    linhas_afetadas = atualizar_cliente(
+        cliente_id,
+        cliente
+    )
+    
+    if linhas_afetadas == 0:
+        raise HTTPException(
+            status_code=404,
+            detail="Cliente não encontrado"
+        )
+    
+    return {
+        "mensagem": "Cliente atualizado com sucesso"
+    }
